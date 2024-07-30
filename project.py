@@ -10,8 +10,7 @@ class FeedbackSystem:
         'guest': {'welcoming': [], 'documentation': [], 'access': [], 'accounts': [], 'follow_up': []},
     }
 
-
-    def __init__(self):
+    def _init_(self):
         self.feedback_data = {}
 
     def onboarding_flow(self, category):
@@ -22,13 +21,13 @@ class FeedbackSystem:
     def collect_feedback(self, role):
         feedback_fields = input(f"Enter feedback fields for {roles[role]}  ").split(',')
         role_feedback = self.feedback_data.get(role, {})
-        role_feedback = {field: input(f"Enter feedback for {field}: ") for field in feedback_fields}
+        role_feedback.update({field: input(f"Enter feedback for {field}: ") for field in feedback_fields})
         self.feedback_data[role] = role_feedback
 
     def update_feedback(self, role):
         feedback_fields = input(f"Enter feedback fields to update for {roles[role]} ").split(',')
         role_feedback = self.feedback_data.get(role, {})
-        role_feedback = {field: input(f"Enter updated feedback for {field}: ") for field in feedback_fields}
+        role_feedback.update({field: input(f"Enter updated feedback for {field}: ") for field in feedback_fields})
         self.feedback_data[role] = role_feedback
 
     def delete_feedback(self, role):
@@ -54,7 +53,6 @@ class FeedbackSystem:
             print("Invalid category index.")
             return None
 
-    
 def main():
     feedback_system = FeedbackSystem()
 
@@ -72,15 +70,16 @@ def main():
             break
         
         match choice:
-            case '1'|'2'|'3'|'4' :
+            case '1' | '2' | '3' | '4':
                 category_index = input("Enter the onboarding category index (1-6): ")
                 if not category_index.isdigit() or not (1 <= int(category_index) <= 6):
                     print("Invalid category index. Please enter a number between 1 and 6.")
+                    continue
                 category = feedback_system.print_onboarding_system_key(category_index)
                 if not category:
                     continue
 
-        match choice: 
+        match choice:
             case '1':
                 feedback_system.collect_feedback(str(category_index))
             case '2':
@@ -89,14 +88,14 @@ def main():
                 feedback_system.delete_feedback(str(category_index))
             case '4':
                 feedback_system.print_feedback()
-            case '5' :
-                category = input("Enter the cateory to see the onboarding steps : ")
+            case '5':
+                category = input("Enter the category to see the onboarding steps: ")
                 feedback_system.onboarding_flow(category)
-            case _ : 
+            case _:
                 print("Invalid choice. Please enter a number between 1 and 5.")
 
     print("Exiting the program.")
 
-
-if __name__ == "__main__":
+if _name_ == "_main_":
     main()
+  
